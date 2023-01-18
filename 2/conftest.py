@@ -4,7 +4,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def set_webdriver():
     browser.config.driver = webdriver.Chrome(ChromeDriverManager().install())
     return browser.config.driver
