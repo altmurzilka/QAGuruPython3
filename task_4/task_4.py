@@ -1,20 +1,83 @@
-def print_func(func_name, *args):
-    func_name = func_name.__name__.replace("_", " ").capitalize()
-    print(func_name, *args)
+import math
+import random
 
 
-def open_browser(browser_name):
-    print_func(open_browser, browser_name)
+def test_greeting():
+    """
+    Напишите программу, которая выводит на экран приветствие.
+    """
+    name = "Анна"
+    age = 25
+    # TODO Сформируйте нужную строку
+    output = f"Привет, {name}! Тебе {age} лет."
+    # Проверяем результат
+    assert output == "Привет, Анна! Тебе 25 лет."
 
 
-def go_to_company_name_homepage(page_url):
-    print_func(go_to_company_name_homepage, page_url)
+def test_rectangle():
+    """
+    Напишите программу, которая берет длину и ширину прямоугольника
+    и считает его периметр и площадь.
+    """
+    a = 10
+    b = 20
+    # TODO сосчитайте периметр
+    perimeter = (a + b) * 2
+    assert perimeter == 60
+    # TODO сосчитайте площадь
+    area = a * b
+    assert area == 200
 
 
-def find_registration_button_on_login_page(page_url, button_text):
-    print_func(find_registration_button_on_login_page, page_url, button_text)
+def test_circle():
+    """
+    Напишите программу, которая берет радиус круга и выводит на экран его длину и площадь.
+    Используйте константу PI
+    """
+    r = 23
+    # TODO сосчитайте площадь
+    area = math.pi * r ** 2
+    assert area == 1661.9025137490005
+    # TODO сосчитайте длину окружности
+    length = math.pi * 2 * r
+    assert length == 144.51326206513048
 
 
-open_browser('Chrome')
-go_to_company_name_homepage('https://qa.guru/')
-find_registration_button_on_login_page('https://qa.guru/cms/system/login', 'Login')
+def test_random_list():
+    """
+    Создайте список из 10 случайных чисел от 1 до 100 и отсортируйте его по возрастанию.
+    """
+    # TODO создайте список
+    arr = []
+    for i in (range(0, 10)):
+        arr.append(random.randint(1, 100))
+    arr.sort()
+    assert len(arr) == 10
+    assert arr[0] < arr[-1]
+
+
+def test_unique_elements():
+    """
+    Удалите из списка все повторяющиеся элементы
+    """
+    l = [1, 2, 3, 4, 5, 5, 5, 6, 7, 8, 8, 9, 10, 10]
+    # TODO удалите повторяющиеся элементы
+    l = list(set(l))
+    assert isinstance(l, list)
+    assert len(l) == 10
+    assert l == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+
+def test_dicts():
+    """
+    Создайте словарь из двух списков.
+    Используйте первый список как ключи, а второй - как значения.
+    Выведите на экран все значения словаря.
+    Подсказка: используй встроенную функцию zip.
+    """
+    first = ["a", "b", "c", "d", "e"]
+    second = [1, 2, 3, 4, 5]
+    # TODO создайте словарь
+    d = dict(zip(first, second))
+    assert isinstance(d, dict)
+    assert len(d) == 5
