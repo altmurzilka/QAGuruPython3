@@ -23,13 +23,13 @@ class TestProducts:
     Например, текущий класс группирует тесты на класс Product
     """
 
-    def test_product_check_quantity(self, product):
+    def test_check_quantity(self, product):
         # TODO напишите проверки на метод check_quantity
         assert product.check_quantity(999) is True
         assert product.check_quantity(1000) is True
         assert product.check_quantity(1001) is False
 
-    def test_product_buy(self, product):
+    def test_buy(self, product):
         # TODO напишите проверки на метод buy
         product.buy(0)
         assert product.quantity == 1000
@@ -100,3 +100,8 @@ class TestCart:
         cart.add_product(product, 800)
         cart.buy()
         assert product.quantity == 0, "Wrong quantity for left product"
+
+    def test_by_more_than_left(self, cart, product):
+        with pytest.raises(ValueError):
+            cart.add_product(product, 1001)
+            assert cart.buy()
