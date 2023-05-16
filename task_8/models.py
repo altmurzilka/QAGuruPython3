@@ -1,3 +1,7 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Product:
     """
     Класс продукта
@@ -40,8 +44,8 @@ class Product:
 
 class Cart:
     """
-    Класс корзины. В нем хранятся продукты, которые пользователь хочет купить.
-    TODO реализуйте все методы класса
+    #  Класс корзины. В нем хранятся продукты, которые пользователь хочет купить.
+    #  TODO реализуйте все методы класса
     """
 
     # Словарь продуктов и их количество в корзине
@@ -68,7 +72,7 @@ class Cart:
         Если remove_count больше, чем количество продуктов в позиции, то удаляется вся позиция
         """
         if remove_count is None or remove_count >= self.products[product]:
-            del self.products[product]
+            self.products.pop(product)
         else:
             self.products[product] -= remove_count
 
