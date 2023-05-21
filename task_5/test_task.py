@@ -1,5 +1,5 @@
 import os
-from selene import have
+from selene import have, command
 from selene.support.shared import browser
 
 
@@ -18,6 +18,7 @@ def test_submit_form():
 
     browser.element('#uploadPicture').send_keys(os.path.abspath((os.path.dirname(__file__) + '/image/ditto.jpeg')))
     browser.element('#currentAddress').type('Almaty')
+    browser.element("#state").perform(command.js.scroll_into_view)
 
     browser.element('#react-select-3-input').type('NCR').press_enter()
     browser.element('#react-select-4-input').type('Noida').press_enter()
