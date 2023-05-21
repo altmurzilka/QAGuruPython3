@@ -1,4 +1,4 @@
-from task_9.demoqa_tests import resource
+from task_9.demoqa_tests.pages import resource
 from selene import have, command
 from selene.support.shared import browser
 
@@ -36,10 +36,8 @@ class RegistrationPage:
         browser.element('#subjectsInput').type(value).press_enter()
         return self
 
-    @property
-    def choose_hobbies(self):
-        browser.element("#hobbies-checkbox-2").perform(command.js.scroll_into_view)
-        browser.element('[for=hobbies-checkbox-2]').click()
+    def choose_hobbies(self, value):
+        browser.all('[for^=hobbies-checkbox]').element_by(have.exact_text(value)).click()
         return self
 
     def select_picture(self, value):

@@ -1,4 +1,4 @@
-from task_9.demoqa_tests.registration_form import RegistrationPage
+from task_9.demoqa_tests.pages.registration_form import RegistrationPage
 
 
 def test_submit_form():
@@ -14,7 +14,7 @@ def test_submit_form():
         .fill_mobile_number('9999999999') \
         .fill_date_of_birth('July', '1995', '12') \
         .fill_subject('Biology') \
-        .choose_hobbies \
+        .choose_hobbies('Reading') \
         .select_picture('ditto') \
         .fill_address('Almaty') \
         .choose_state_and_city('NCR', 'Noida') \
