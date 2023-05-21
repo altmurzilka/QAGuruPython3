@@ -4,14 +4,6 @@ from selene.support.shared import browser
 
 
 class RegistrationPage:
-    # def open(self):
-    #     browser.open('https://demoqa.com/automation-practice-form')
-    #     browser.all('[id^=google_ads][id$=container__]').with_(timeout=10).wait_until(
-    #         have.size_greater_than_or_equal(3)
-    #     )
-    #     browser.all('[id^=google_ads][id$=container__]').perform(command.js.remove)
-    #     return self
-
     def fill_first_name(self, value):
         browser.element('#firstName').type(value)
         return self
@@ -24,6 +16,7 @@ class RegistrationPage:
         browser.element('#userEmail').type(email)
         return self
 
+    @property
     def choose_gender(self):
         browser.element('[name=gender][value=Female]+label').click()
         return self
@@ -43,6 +36,7 @@ class RegistrationPage:
         browser.element('#subjectsInput').type(value).press_enter()
         return self
 
+    @property
     def choose_hobbies(self):
         browser.element("#hobbies-checkbox-2").perform(command.js.scroll_into_view)
         browser.element('[for=hobbies-checkbox-2]').click()
