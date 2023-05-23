@@ -1,36 +1,31 @@
 from task_9.demoqa_tests.registration_form import RegistrationPage
+from task_9.demoqa_tests.users import Hobby, Gender, User, Subject
 
 
-def test_submit_form():
+def test_submit_form(browser_management):
     registration_page = RegistrationPage()
 
+    user = User(
+        first_name='Altyn',
+        last_name='Myrzakulova',
+        email='test@gmail.com',
+        gender=Gender.female.value,
+        mobile='9999999999',
+        day='12',
+        month='July',
+        year='1995',
+        subjects=[Subject.biology],
+        hobbies=[Hobby.reading],
+        picture='ditto',
+        address='Almaty',
+        state='NCR',
+        city='Noida'
+    )
+
+    registration_page.open()
+
     # WHEN
-    registration_page
-    registration_page \
-        .fill_first_name('Altyn') \
-        .fill_last_name('Myrzakulova') \
-        .fill_email('test@gmail.com') \
-        .choose_gender() \
-        .fill_mobile_number('9999999999') \
-        .fill_date_of_birth('July', '1995', '12') \
-        .fill_subject('Biology') \
-        .choose_hobbies() \
-        .select_picture('ditto') \
-        .fill_address('Almaty') \
-        .choose_state_and_city('NCR', 'Noida') \
-        .submit()
+    registration_page.fill_form(user)
 
     # THEN
-    registration_page.assert_user_info(
-        'Altyn',
-        'Myrzakulova',
-        'test@gmail.com',
-        'Female',
-        '9999999999',
-        '12 July,1995',
-        'Biology',
-        'Reading',
-        'ditto',
-        'Almaty',
-        'NCR Noida'
-    )
+    registration_page.assert_user_info(user)

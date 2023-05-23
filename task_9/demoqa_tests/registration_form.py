@@ -2,82 +2,57 @@ from task_9.demoqa_tests import resource
 from selene import have, command
 from selene.support.shared import browser
 
+from task_9.demoqa_tests.users import User
+
 
 class RegistrationPage:
-    # def open(self):
-    #     browser.open('https://demoqa.com/automation-practice-form')
+    def open(self):
+        browser.open('/automation-practice-form')
     #     browser.all('[id^=google_ads][id$=container__]').with_(timeout=10).wait_until(
     #         have.size_greater_than_or_equal(3)
     #     )
     #     browser.all('[id^=google_ads][id$=container__]').perform(command.js.remove)
-    #     return self
-
-    def fill_first_name(self, value):
-        browser.element('#firstName').type(value)
         return self
 
-    def fill_last_name(self, value):
-        browser.element('#lastName').type(value)
-        return self
-
-    def fill_email(self, email):
-        browser.element('#userEmail').type(email)
-        return self
-
-    def choose_gender(self):
-        browser.element('[name=gender][value=Female]+label').click()
-        return self
-
-    def fill_mobile_number(self, number):
-        browser.element('#userNumber').type(number)
-        return self
-
-    def fill_date_of_birth(self, month, year, day):
+    def fill_form(self, user: User):
+        browser.element('#firstName').type(user.first_name)
+        browser.element('#lastName').type(user.last_name)
+        browser.element('#userEmail').type(user.email)
+        browser.element(f'[name=gender][value={user.gender}]+label').click()
+        browser.element('#userNumber').type(user.mobile)
         browser.element('#dateOfBirthInput').click()
-        browser.element('.react-datepicker__month-select').type(month)
-        browser.element('.react-datepicker__year-select').type(year)
-        browser.element(f'.react-datepicker__day--0{day}').click()
-        return self
+        browser.element('.react-datepicker__month-select').type(user.month)
+        browser.element('.react-datepicker__year-select').type(user.year)
+        browser.element(f'.react-datepicker__day--0{user.day}').click()
 
-    def fill_subject(self, value):
-        browser.element('#subjectsInput').type(value).press_enter()
-        return self
+        for subject in user.subjects:
+            browser.element('#subjectsInput').type(subject.value).press_enter()
 
-    def choose_hobbies(self):
-        browser.element("#hobbies-checkbox-2").perform(command.js.scroll_into_view)
-        browser.element('[for=hobbies-checkbox-2]').click()
-        return self
+        for hobby in user.hobbies:
+            browser.all('.custom-checkbox').element_by(have.exact_text(hobby.value)).click()
 
-    def select_picture(self, value):
-        browser.element('#uploadPicture').send_keys(resource.path(value))
-        return self
-
-    def fill_address(self, value):
-        browser.element('#currentAddress').type(value)
-        return self
-
-    def choose_state_and_city(self, state, city):
-        browser.element("#state").perform(command.js.scroll_into_view)
-        browser.element('#react-select-3-input').type(state).press_enter()
-        browser.element('#react-select-4-input').type(city).press_enter()
-        return self
-
-    def submit(self):
+        browser.element('#uploadPicture').send_keys(resource.path(user.picture))
+        browser.element('#currentAddress').type(user.address)
+        browser.element('#react-select-3-input').type(user.state).press_enter()
+        browser.element('#react-select-4-input').type(user.city).press_enter()
         browser.element('#submit').press_enter()
         return self
 
-    def assert_user_info(self, first_name, last_name, email,
-                         gender, number, birthdate,
-                         subject, hobbies, picture, address, state_and_city):
+    def assert_user_info(self, user: User):
+        full_name = f'{user.first_name} {user.last_name}'
+        birthday = f'{user.day} {user.month},{user.year}'
+        state_and_city = f'{user.state} {user.city}'
+        subject = ','.join([subject.value for subject in user.subjects])
+        hobby = ','.join([hobby.value for hobby in user.hobbies])
         browser.element('.table').all('td').should(have.texts(
-            ('Student Name', f'{first_name} {last_name}'),
-            ('Student Email', f'{email}'),
-            ('Gender', f'{gender}'),
-            ('Mobile', f'{number}'),
-            ('Date of Birth', f'{birthdate}'),
+            ('Student Name', f'{full_name}'),
+            ('Student Email', f'{user.email}'),
+            ('Gender', f'{user.gender}'),
+            ('Mobile', f'{user.mobile}'),
+            ('Date of Birth', f'{birthday}'),
             ('Subjects', f'{subject}'),
-            ('Hobbies', f'{hobbies}'),
-            ('Picture', f'{picture}.jpeg'),
-            ('Address', f'{address}'),
+            ('Hobbies', f'{hobby}'),
+            ('Picture', f'{user.picture}.jpeg'),
+            ('Address', f'{user.address}'),
             ('State and City', f'{state_and_city}')))
         return self
