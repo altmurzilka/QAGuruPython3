@@ -170,4 +170,7 @@ poetry.toml
 
 .DS_Store
 
+#allure
+allure_results/
+
 # End of https://www.toptal.com/developers/gitignore/api/python

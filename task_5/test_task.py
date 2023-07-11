@@ -13,6 +13,7 @@ def test_submit_form():
     browser.element('.react-datepicker__month-select').type("July")
     browser.element('.react-datepicker__year-select').type("1995")
     browser.element('.react-datepicker__day--012').click()
+
     browser.element('#subjectsInput').type('Biology').press_enter()
     browser.element('[for=hobbies-checkbox-2]').click()
 
